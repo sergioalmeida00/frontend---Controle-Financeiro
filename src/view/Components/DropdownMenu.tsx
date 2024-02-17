@@ -7,7 +7,7 @@ function DrodownMenu({ children }: { children: React.ReactNode }) {
 }
 
 function DropdownTrigger({ children }: { children: React.ReactNode }) {
-  return <RadixDropdownMenu.Trigger>{children}</RadixDropdownMenu.Trigger>;
+  return <RadixDropdownMenu.Trigger className="outline-none" asChild>{children}</RadixDropdownMenu.Trigger>;
 }
 
 interface DropdownContentProps {

@@ -1,5 +1,6 @@
 import { useAuth } from "../../../app/hooks/useAuth";
 import { Logo } from "../../Components/Logo";
+
 import { UserMenu } from "../../Components/UserMenu";
 import { Accounts } from "./components/Accounts/Accounts";
 import { DashboardProvider } from "./components/Context";
@@ -27,6 +28,7 @@ export function DashBoard() {
         </main>
 
         <Fab/>
+
       </div>
     </DashboardProvider>
   );
