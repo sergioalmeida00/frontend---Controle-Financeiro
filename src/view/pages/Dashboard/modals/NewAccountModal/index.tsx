@@ -1,4 +1,6 @@
 import { Modal } from "../../../../Components";
+import { Button } from "../../../../Components/Button";
+import { ColorDropdownInput } from "../../../../Components/ColorDropdownInput";
 import { Input } from "../../../../Components/Input";
 import { InputCurrency } from "../../../../Components/InputCurrency";
 import { Select } from "../../../../Components/Select";
@@ -34,7 +36,10 @@ export function NewAccountModal() {
               { value: "CASH", label: "Dinheiro Físico" },
             ]}
           />
+
+          <ColorDropdownInput />
         </div>
+        <Button className="w-full mt-10">Criar</Button>
       </form>
     </Modal>
   );

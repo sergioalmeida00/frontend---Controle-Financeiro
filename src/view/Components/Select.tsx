@@ -67,9 +67,7 @@ export function Select({
                     value={option.value}
                     key={option.value}
                   >
-                    <RadixSelect.ItemText>
-                      {option.label}
-                    </RadixSelect.ItemText>
+                    <RadixSelect.ItemText>{option.label}</RadixSelect.ItemText>
                   </RadixSelect.Item>
                 ))}
               </RadixSelect.Viewport>
@@ -82,6 +80,7 @@ export function Select({
         </RadixSelect.Root>
       </div>
 
+      
       {error && (
         <div className="text-red-900 flex gap-2 mt-2">
           <CrossCircledIcon />
