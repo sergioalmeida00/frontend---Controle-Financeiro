@@ -28,8 +28,6 @@ export function useAccountsController() {
     );
   }, [data]);
 
-  console.log(data)
-
   return {
     sliderState,
     setSliderState,
