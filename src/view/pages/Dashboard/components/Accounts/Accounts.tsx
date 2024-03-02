@@ -18,7 +18,8 @@ export function Accounts() {
     toggleValuesVisibility,
     isLoading,
     accounts,
-    openNewAccountModal
+    openNewAccountModal,
+    currentBalance,
   } = useAccountsController();
 
   return (
@@ -43,7 +44,7 @@ export function Accounts() {
                   !areValuesVisible && "blur-md"
                 )}
               >
-                {formatCurrency(3000)}
+                {formatCurrency(currentBalance)}
               </strong>
               <button
                 className="w-8 h-8 flex items-center justify-center"
@@ -57,19 +58,22 @@ export function Accounts() {
           <div className="flex-1 flex flex-col justify-end mt-10 md:mt-0">
             {accounts.length === 0 && (
               <>
-                <div
-                  className=" mb-4"
-                >
+                <div className=" mb-4">
                   <strong className="text-white tracking-[-1px] text-lg">
                     Minhas Contas
                   </strong>
                 </div>
 
-                <button onClick={openNewAccountModal} className="mt-4 h-52 rounded-2xl border-2 border-dashed border-teal-600 flex flex-col items-center justify-center gap-4 text-white">
+                <button
+                  onClick={openNewAccountModal}
+                  className="mt-4 h-52 rounded-2xl border-2 border-dashed border-teal-600 flex flex-col items-center justify-center gap-4 text-white"
+                >
                   <div className="w-11 h-11 rounded-full border-2 border-dashed flex items-center justify-center">
-                    <PlusIcon className="w-6 h-6"/>
+                    <PlusIcon className="w-6 h-6" />
                   </div>
-                  <span className="tracking-[-0.5px] font-medium block w-32 text-center">Cadastre uma nova conta</span>
+                  <span className="tracking-[-0.5px] font-medium block w-32 text-center">
+                    Cadastre uma nova conta
+                  </span>
                 </button>
               </>
             )}
@@ -98,32 +102,16 @@ export function Accounts() {
                       isEnd={sliderState.isEnd}
                     />
                   </div>
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#FF7A00"
-                      name="Inter"
-                      balance={1000}
-                      type="CASH"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#070707"
-                      name="XP"
-                      balance={1000}
-                      type="INVESTMENT"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#0AE0F9"
-                      name="Carteira"
-                      balance={1000}
-                      type="CHECKING"
-                    />
-                  </SwiperSlide>
+                  {accounts.map((account) => (
+                    <SwiperSlide key={account.id}>
+                      <AccountCard
+                        color={account.color}
+                        name={account.name}
+                        balance={Number(account.currentBalance)}
+                        type={account.type}
+                      />
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
             )}
