@@ -8,7 +8,10 @@ import { BankAccountParams } from "../../../../../app/services/bankAccountServic
 import toast from "react-hot-toast";
 
 const schema = z.object({
-  initial_balance: z.string().nonempty("Saldo inicial é obrigatório "),
+  initial_balance: z.union([
+    z.string().nonempty("Saldo inicial é obrigatório "),
+    z.number(),
+  ]),
   name: z.string().nonempty("Nome da conta é obrigatório"),
   type: z.enum(["INVESTMENT", "CASH", "CHECKING"]),
   color: z.string().nonempty("Cor é obrigatória"),
@@ -17,23 +20,30 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function useEditAccountModalController() {
-  const { isEditAccountModalOpen, closeEditAccountModal } = useDashboard();
+  const { isEditAccountModalOpen, closeEditAccountModal, accountEdited } =
+    useDashboard();
 
+  console.log(accountEdited);
   const {
     register,
     handleSubmit: hookFormHandleSubmit,
     formState: { errors },
     control,
-    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      color: accountEdited?.color,
+      name: accountEdited?.name,
+      type: accountEdited?.type,
+      initial_balance: accountEdited?.initial_balance,
+    },
   });
 
   const queryClient = useQueryClient();
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async (data: BankAccountParams) => {
-      return bankAccountsService.create(data);
+      return bankAccountsService.update({ id: accountEdited!.id, ...data });
     },
   });
 
@@ -42,11 +52,10 @@ export function useEditAccountModalController() {
       await mutateAsync(data);
 
       queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
-      toast.success("Conta cadastrada com sucesso!");
+      toast.success("A conta foi editada com sucesso!");
       closeEditAccountModal();
-      reset();
     } catch (error) {
-      toast.error("Erro ao cadastrar a conta!");
+      toast.error("Erro ao salvar as alterações!");
     }
   });
 

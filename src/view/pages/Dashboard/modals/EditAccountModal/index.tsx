@@ -35,7 +35,7 @@ export function EditAccountModal() {
             <Controller
               control={control}
               name="initial_balance"
-              defaultValue="0"
+              defaultValue={0}
               render={({ field: { onChange, value } }) => (
                 <InputCurrency
                   error={errors.initial_balance?.message}
@@ -88,7 +88,7 @@ export function EditAccountModal() {
           />
         </div>
         <Button className="w-full mt-10" isLoading={isPending}>
-          Criar
+          Salvar
         </Button>
       </form>
     </Modal>
