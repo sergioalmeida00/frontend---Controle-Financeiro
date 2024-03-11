@@ -91,7 +91,7 @@ export function EditAccountModal() {
                 onChange={onChange}
                 value={value}
                 options={[
-                  { value: "INVESTMENT", label: "Investimnto" },
+                  { value: "INVESTMENT", label: "Investimento" },
                   { value: "CHECKING", label: "Conta Corrente" },
                   { value: "CASH", label: "Dinheiro Físico" },
                 ]}
