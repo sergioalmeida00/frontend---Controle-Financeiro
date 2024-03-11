@@ -24,6 +24,7 @@ export function Transactions() {
     handleChangeMonth,
     filters,
     handleChangeFilters,
+    handleApplyFilters
   } = useTransactionController();
 
   const hasTransactions = transactions.length > 0;
@@ -41,6 +42,7 @@ export function Transactions() {
           <FiltersModal
             open={isFiltersModalOpen}
             onClose={handleCloseFiltersModal}
+            onApplyFilters={handleApplyFilters}
           />
           <header>
             <div className="flex items-center justify-between">
