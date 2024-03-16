@@ -39,7 +39,6 @@ export function NewTransactionModal() {
             <Controller
               control={control}
               name="value"
-              defaultValue={0}
               render={({ field: { onChange, value } }) => (
                 <InputCurrency
                   error={errors.value?.message}
@@ -62,7 +61,6 @@ export function NewTransactionModal() {
           <Controller
             control={control}
             name="category_id"
-            defaultValue=""
             render={({ field: { onChange, value } }) => (
               <Select
                 error={errors.category_id?.message}
@@ -80,7 +78,6 @@ export function NewTransactionModal() {
           <Controller
             control={control}
             name="bank_account_id"
-            defaultValue=""
             render={({ field: { onChange, value } }) => (
               <Select
                 error={errors.bank_account_id?.message}

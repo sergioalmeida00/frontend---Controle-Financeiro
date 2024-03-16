@@ -35,6 +35,11 @@ export function useNewTransactionModalController() {
     reset,
   } = useForm<formData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      bank_account_id: "",
+      category_id: "",
+      value: "0",
+    },
   });
 
   const queryClient = useQueryClient();
@@ -59,12 +64,12 @@ export function useNewTransactionModalController() {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
       closeNewTransactionModal();
-      reset();
       toast.success(
         newTransactionType === "EXPENSE"
           ? "Despesa cadastrada com sucesso!"
           : "Receita cadastrada com sucesso!"
       );
+      reset();
     } catch (error) {
       toast.error(
         newTransactionType === "EXPENSE"

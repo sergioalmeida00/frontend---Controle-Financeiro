@@ -27,6 +27,12 @@ export function useNewAccountModalController() {
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      name: "",
+      initial_balance: "0",
+      color: "",
+      type: "CHECKING",
+    },
   });
 
   const queryClient = useQueryClient();
