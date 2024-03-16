@@ -1,5 +1,7 @@
-import { getAll } from './getAll';
+import { create } from "./create";
+import { getAll } from "./getAll";
 
 export const categoriesService = {
   getAll,
+  create,
 };

@@ -17,7 +17,6 @@ export function NewAccountModal() {
     control,
     isPending
   } = useNewAccountModalController();
-
   return (
     <Modal
       title="Nova Conta"

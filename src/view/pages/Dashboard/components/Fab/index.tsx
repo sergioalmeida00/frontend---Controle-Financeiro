@@ -1,11 +1,12 @@
-import { PlusIcon } from "@radix-ui/react-icons";
+import { EraserIcon, PlusIcon } from "@radix-ui/react-icons";
 import { DropdownMenu } from "../../../../Components/DropdownMenu";
 import { CategoryIcon } from "../../../../Components/icons/categories/CategoryIcon";
 import { BankAccountIcon } from "../../../../Components/icons/BankAccountIcon";
 import { useDashboard } from "../Context/useDashboard";
 
 export function Fab() {
-  const { openNewAccountModal, openNewTransactionModal } = useDashboard();
+  const { openNewAccountModal, openNewTransactionModal, openNewCategoryModal } =
+    useDashboard();
   return (
     <div className="fixed right-4 bottom-4">
       <DropdownMenu.Root>
@@ -32,6 +33,10 @@ export function Fab() {
           <DropdownMenu.Item className="gap-2" onSelect={openNewAccountModal}>
             <BankAccountIcon />
             Nova Conta
+          </DropdownMenu.Item>
+          <DropdownMenu.Item className="gap-2" onSelect={openNewCategoryModal}>
+            <EraserIcon className="w-6 h-6" />
+            Nova Categoria
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
