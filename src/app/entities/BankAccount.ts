@@ -5,4 +5,6 @@ export interface BankAccount {
   type: "INVESTMENT" | "CASH" | "CHECKING";
   color: string;
   currentBalance: number;
+  goal: number;
+  currentGoal?: number;
 }

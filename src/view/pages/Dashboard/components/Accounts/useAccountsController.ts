@@ -21,7 +21,6 @@ export function useAccountsController() {
   //   queryKey: ["bankAccounts"],
   //   queryFn: bankAccountsService.getAll,
   // });
-
   const currentBalance = useMemo(() => {
     return accounts.reduce(
       (total, account) => Number(total) + Number(account.currentBalance),
