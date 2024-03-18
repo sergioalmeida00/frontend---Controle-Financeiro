@@ -15,8 +15,11 @@ export function NewAccountModal() {
     register,
     handleSubmit,
     control,
-    isPending
+    isPending,
+    handleChangeOptionType,
+    isOptionInvestment,
   } = useNewAccountModalController();
+
   return (
     <Modal
       title="Nova Conta"
@@ -62,7 +65,10 @@ export function NewAccountModal() {
               <Select
                 error={errors.type?.message}
                 placeholder="Tipo"
-                onChange={onChange}
+                onChange={(selectedOption) => {
+                  onChange(selectedOption);
+                  handleChangeOptionType(selectedOption);
+                }}
                 value={value}
                 options={[
                   { value: "INVESTMENT", label: "Investimento" },
@@ -72,6 +78,24 @@ export function NewAccountModal() {
               />
             )}
           />
+
+          {isOptionInvestment && (
+            <div>
+              <Controller
+                control={control}
+                name="goal"
+                render={({ field: { onChange, value } }) => (
+                  <InputCurrency
+                    error={errors.initial_balance?.message}
+                    onChange={onChange}
+                    value={value}
+                    className="w-full text-[16px] font-normal bg-white rounded-lg border border-gray-500 px-3 h-[52px]  placeholder:text-gray-700  focus:border-gray-800 transition-all outline-none"
+                    placeholder="Valor da Meta"
+                  />
+                )}
+              />
+            </div>
+          )}
 
           <Controller
             control={control}
@@ -86,7 +110,9 @@ export function NewAccountModal() {
             )}
           />
         </div>
-        <Button className="w-full mt-10" isLoading={isPending}>Criar</Button>
+        <Button className="w-full mt-10" isLoading={isPending}>
+          Criar
+        </Button>
       </form>
     </Modal>
   );

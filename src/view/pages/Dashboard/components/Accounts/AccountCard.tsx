@@ -11,6 +11,7 @@ interface AccountsProps {
 export function AccountCard({ data }: AccountsProps) {
   const { areValuesVisible, openEditAccountModal } = useDashboard();
   const { color, name, currentBalance, type, currentGoal, goal } = data;
+
   return (
     <div
       className="p-4 bg-white rounded-2xl h-[200px] flex flex-col justify-between border-b-4"
@@ -26,7 +27,7 @@ export function AccountCard({ data }: AccountsProps) {
         </span>
       </div>
 
-      {currentGoal && (
+      {currentGoal !== null && currentGoal !== undefined && (
         <div>
           <Progress.Root
             className=" relative overflow-hidden bg-gray-400 rounded-full w-full h-[5px] mt-1"

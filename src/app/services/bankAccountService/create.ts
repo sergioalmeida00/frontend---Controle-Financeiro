@@ -5,6 +5,7 @@ export interface BankAccountParams {
   initial_balance: string | number;
   type: "INVESTMENT" | "CASH" | "CHECKING";
   color: string;
+  goal?: string | number;
 }
 
 export async function create(params: BankAccountParams) {

@@ -6,11 +6,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { bankAccountsService } from "../../../../../app/services/bankAccountService";
 import { BankAccountParams } from "../../../../../app/services/bankAccountService/create";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const schema = z.object({
   initial_balance: z.string().nonempty("Saldo inicial é obrigatório "),
   name: z.string().nonempty("Nome da conta é obrigatório"),
   type: z.enum(["INVESTMENT", "CASH", "CHECKING"]),
+  goal: z.string().optional(),
   color: z.string().nonempty("Cor é obrigatória"),
 });
 
@@ -18,7 +20,7 @@ type FormData = z.infer<typeof schema>;
 
 export function useNewAccountModalController() {
   const { isNewAccountModalOpen, closeNewAccountModal } = useDashboard();
-
+  const [isOptionInvestment, setIsOptionInvestment] = useState(false);
   const {
     register,
     handleSubmit: hookFormHandleSubmit,
@@ -32,6 +34,7 @@ export function useNewAccountModalController() {
       initial_balance: "0",
       color: "",
       type: "CHECKING",
+      goal:""
     },
   });
 
@@ -56,6 +59,14 @@ export function useNewAccountModalController() {
     }
   });
 
+  function handleChangeOptionType(optionValue: string) {
+    if (optionValue === "INVESTMENT") {
+      setIsOptionInvestment(true);
+    }else{
+      setIsOptionInvestment(false);
+    }
+  }
+
   return {
     isNewAccountModalOpen,
     closeNewAccountModal,
@@ -65,5 +76,7 @@ export function useNewAccountModalController() {
     handleSubmit,
     control,
     isPending,
+    handleChangeOptionType,
+    isOptionInvestment,
   };
 }

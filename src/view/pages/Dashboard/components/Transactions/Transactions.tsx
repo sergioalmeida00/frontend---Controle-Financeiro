@@ -12,6 +12,7 @@ import emptyState from "../../../../../assets/images/emptyState.svg";
 import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { FiltersModal } from "./FiltersModal";
 import { EditTransactionModal } from "../../modals/EditTransactionModal";
+import { formatDate } from "../../../../../app/utils/formatDate";
 
 export function Transactions() {
   const {
@@ -134,7 +135,7 @@ export function Transactions() {
                           {transaction.name}
                         </strong>
                         <span className="text-sm text-gray-600">
-                          {transaction.date}
+                          {formatDate(new Date(transaction.date))}
                         </span>
                       </div>
                     </div>

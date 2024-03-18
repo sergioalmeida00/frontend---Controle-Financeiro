@@ -82,6 +82,7 @@ export function useEditAccountModalController() {
       await removeAccount(accountEdited!.id);
 
       queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
       toast.success("A conta foi deletada com sucesso!");
       closeEditAccountModal();
     } catch (error) {

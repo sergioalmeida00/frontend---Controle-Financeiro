@@ -6,18 +6,28 @@ interface InputCurrencyProps {
   error?: string;
   value?: string | number;
   onChange?(value: string): void;
+  className?: string;
+  placeholder?: string;
 }
-export function InputCurrency({ error, onChange, value }: InputCurrencyProps) {
+export function InputCurrency({
+  error,
+  onChange,
+  value,
+  className,
+  placeholder,
+}: InputCurrencyProps) {
   return (
     <div>
       <NumericFormat
+        placeholder={placeholder}
         thousandSeparator="."
         decimalSeparator=","
         value={value}
         onValueChange={(event) => onChange?.(event.value)}
         className={cn(
           "text-gray-800 text-[32px] font-bold tracking-[-1px] outline-none w-full",
-          error && "text-red-900"
+          error && "text-red-900",
+          className
         )}
       />
 
