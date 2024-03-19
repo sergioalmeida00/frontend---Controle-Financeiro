@@ -86,7 +86,7 @@ export function NewAccountModal() {
                 name="goal"
                 render={({ field: { onChange, value } }) => (
                   <InputCurrency
-                    error={errors.initial_balance?.message}
+                    error={errors.goal?.message}
                     onChange={onChange}
                     value={value}
                     className="w-full text-[16px] font-normal bg-white rounded-lg border border-gray-500 px-3 h-[52px]  placeholder:text-gray-700  focus:border-gray-800 transition-all outline-none"

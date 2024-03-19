@@ -15,6 +15,7 @@ const schema = z.object({
   ]),
   name: z.string().nonempty("Nome da conta é obrigatório"),
   type: z.enum(["INVESTMENT", "CASH", "CHECKING"]),
+  goal: z.string().optional(),
   color: z.string().nonempty("Cor é obrigatória"),
 });
 
@@ -25,8 +26,8 @@ export function useEditAccountModalController() {
     useDashboard();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditOptionInvestment, setIsEditOptionInvestment] = useState( accountEdited?.type === 'INVESTMENT' );
 
-  console.log(accountEdited);
   const {
     register,
     handleSubmit: hookFormHandleSubmit,
@@ -39,6 +40,7 @@ export function useEditAccountModalController() {
       name: accountEdited?.name,
       type: accountEdited?.type,
       initial_balance: accountEdited?.initial_balance,
+      goal: String(accountEdited?.goal),
     },
   });
 
@@ -90,6 +92,14 @@ export function useEditAccountModalController() {
     }
   }
 
+  function handleEditChangeOptionType(optionValue: string) {
+    if (optionValue === "INVESTMENT") {
+      setIsEditOptionInvestment(true);
+    } else {
+      setIsEditOptionInvestment(false);
+    }
+  }
+
   return {
     isEditAccountModalOpen,
     closeEditAccountModal,
@@ -104,5 +114,7 @@ export function useEditAccountModalController() {
     isDeleteModalOpen,
     handleDeleteAccount,
     isPendingDelete,
+    handleEditChangeOptionType,
+    isEditOptionInvestment,
   };
 }
