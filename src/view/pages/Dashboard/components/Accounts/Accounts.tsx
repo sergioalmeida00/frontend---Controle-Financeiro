@@ -20,6 +20,7 @@ export function Accounts() {
     accounts,
     openNewAccountModal,
     currentBalance,
+    currentBalanceTypes
   } = useAccountsController();
 
   return (
@@ -37,7 +38,7 @@ export function Accounts() {
               Saldo Total
             </span>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-4">
               <strong
                 className={cn(
                   "text-2xl tracking-[-1px] text-white",
@@ -53,6 +54,20 @@ export function Accounts() {
                 <EyeIcon open={!areValuesVisible} />
               </button>
             </div>
+            {Object.entries(currentBalanceTypes).map(([type, balance]) => (
+                <div key={type} className="mt-1">
+                  <span className="tracking-[-0.5px] text-white">
+                     {
+                        type === 'CHECKING' ? `Saldo em Conta: ` : `Saldo Investido: `
+                     } 
+                  </span>
+                  <small className={cn(
+                    "text-white font-bold",
+                    !areValuesVisible && "blur-md"
+                  )}> {formatCurrency(balance)} </small>
+                </div>
+            ))}
+
           </div>
 
           <div className="flex-1 flex flex-col justify-end mt-10 md:mt-0">

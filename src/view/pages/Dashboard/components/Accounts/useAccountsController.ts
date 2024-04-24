@@ -3,6 +3,8 @@ import { useWindowWidth } from "../../../../../app/hooks/useWindowWidth";
 import { useDashboard } from "../Context/useDashboard";
 import { useBankAccount } from "../../../../../app/hooks/useBankAccounts";
 
+type BalanceByType = { [key: string]: number };
+
 export function useAccountsController() {
   const windowWidth = useWindowWidth();
   const { areValuesVisible, toggleValuesVisibility, openNewAccountModal } =
@@ -14,7 +16,7 @@ export function useAccountsController() {
   });
 
   const { accounts, isFetching } = useBankAccount();
- 
+
   const currentBalance = useMemo(() => {
     return accounts.reduce(
       (total, account) => Number(total) + Number(account.currentBalance),
@@ -22,6 +24,21 @@ export function useAccountsController() {
     );
   }, [accounts]);
 
+  const currentBalanceTypes = useMemo(() => {
+    return accounts.reduce((acc: BalanceByType, account) => {
+      // Se o tipo de conta ainda não estiver no acumulador, adiciona
+      if (!acc[account.type]) {
+        acc[account.type] = account.currentBalance;
+      } else {
+        // Caso contrário, soma ao saldo atual
+        acc[account.type] += account.currentBalance;
+      }
+
+      return acc;
+    }, {});
+  }, [accounts]);
+
+  console.log(currentBalanceTypes)
 
   return {
     sliderState,
@@ -33,5 +50,6 @@ export function useAccountsController() {
     accounts,
     openNewAccountModal,
     currentBalance,
+    currentBalanceTypes,
   };
 }
