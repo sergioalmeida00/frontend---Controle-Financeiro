@@ -4,10 +4,9 @@ import "swiper/css";
 import { AccountsSliderNavigation } from "./AccountsSliderNavigation";
 import { EyeIcon } from "../../../../Components/icons/EyeIcon";
 import { useAccountsController } from "./useAccountsController";
-import { formatCurrency } from "../../../../../app/utils/formatCurrency";
-import { cn } from "../../../../../app/utils/cn";
 import { Spinner } from "../../../../Components/Spinner";
 import { PlusIcon } from "@radix-ui/react-icons";
+import { Card } from "../../../../Components/Card";
 
 export function Accounts() {
   const {
@@ -19,8 +18,9 @@ export function Accounts() {
     isLoading,
     accounts,
     openNewAccountModal,
-    currentBalance,
-    currentBalanceTypes
+    summaryTotal,
+    sliderSummary,
+    setSliderSummary
   } = useAccountsController();
 
   return (
@@ -34,40 +34,40 @@ export function Accounts() {
       {!isLoading && (
         <>
           <div>
-            <span className="tracking-[-0.5px] text-white block">
-              Saldo Total
-            </span>
-
-            <div className="flex items-center gap-2 mb-4">
-              <strong
-                className={cn(
-                  "text-2xl tracking-[-1px] text-white",
-                  !areValuesVisible && "blur-md"
-                )}
+            <Swiper
+              spaceBetween={16}
+              slidesPerView={windowWidth >= 500 ? 2.1 : 1.1}
+              onSlideChange={(swiper) => {
+                setSliderSummary({
+                  isBeginning: swiper.isBeginning,
+                  isEnd: swiper.isEnd,
+                });
+              }}
+            >
+              <div
+                className="flex items-center justify-between mb-4"
+                slot="container-start"
               >
-                {formatCurrency(currentBalance)}
-              </strong>
-              <button
-                className="w-8 h-8 flex items-center justify-center"
-                onClick={toggleValuesVisibility}
-              >
-                <EyeIcon open={!areValuesVisible} />
-              </button>
-            </div>
-            {Object.entries(currentBalanceTypes).map(([type, balance]) => (
-                <div key={type} className="mt-1">
-                  <span className="tracking-[-0.5px] text-white">
-                     {
-                        type === 'CHECKING' ? `Saldo em Conta: ` : `Saldo Investido: `
-                     } 
-                  </span>
-                  <small className={cn(
-                    "text-white font-bold",
-                    !areValuesVisible && "blur-md"
-                  )}> {formatCurrency(balance)} </small>
-                </div>
-            ))}
+                <button
+                  className="w-8 h-8 flex items-center justify-center"
+                  onClick={toggleValuesVisibility}
+                >
+                  <EyeIcon open={!areValuesVisible} />
+                </button>
+                <AccountsSliderNavigation
+                  isBeginning={sliderSummary.isBeginning}
+                  isEnd={sliderSummary.isEnd}
+                />
+              </div>
 
+              <div className="flex gap-2">
+                {Object.entries(summaryTotal).map(([key, { value, title }]) => (
+                  <SwiperSlide key={key}>
+                    <Card title={title} value={value} visible={areValuesVisible} />
+                  </SwiperSlide>
+                ))}                
+              </div>
+            </Swiper>
           </div>
 
           <div className="flex-1 flex flex-col justify-end mt-10 md:mt-0">

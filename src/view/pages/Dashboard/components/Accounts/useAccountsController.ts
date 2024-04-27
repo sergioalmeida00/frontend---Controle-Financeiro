@@ -15,6 +15,11 @@ export function useAccountsController() {
     isEnd: false,
   });
 
+  const [sliderSummary, setSliderSummary] = useState({
+    isBeginning: true,
+    isEnd: false,
+  })
+
   const { accounts, isFetching } = useBankAccount();
 
   const currentBalance = useMemo(() => {
@@ -38,8 +43,14 @@ export function useAccountsController() {
     }, {});
   }, [accounts]);
 
-  console.log(currentBalanceTypes)
+  const { CHECKING, INVESTMENT } = currentBalanceTypes;
 
+  const summaryTotal = {
+    currentBalance:{value:currentBalance, title: "Saldo Total"},
+    checking: {value: CHECKING, title: "Conta Corrente"},
+    investment: {value:INVESTMENT, title:"Investimentos"}
+  }
+  
   return {
     sliderState,
     setSliderState,
@@ -51,5 +62,8 @@ export function useAccountsController() {
     openNewAccountModal,
     currentBalance,
     currentBalanceTypes,
+    summaryTotal,
+    sliderSummary,
+    setSliderSummary
   };
 }
